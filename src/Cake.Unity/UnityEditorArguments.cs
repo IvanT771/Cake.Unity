@@ -61,6 +61,11 @@ namespace Cake.Unity
         public BuildTarget? BuildTarget { get; set; }
 
         /// <summary>
+        /// Select an active build sub-target for the Standalone platforms before loading a project. 
+        /// </summary>
+        public BuildSubtarget? StandaloneSubtarget { get; set; }
+
+        /// <summary>
         /// Build a 32-bit standalone Windows player (for example, -buildWindowsPlayer path/to/your/build.exe).
         /// </summary>
         public FilePath BuildWindowsPlayer { get; set; }
@@ -327,6 +332,10 @@ namespace Cake.Unity
                 builder
                     .Append("-buildTarget")
                     .Append(BuildTarget.Value.ToString());
+
+            if(StandaloneSubtarget.HasValue)
+                builder.Append("-standaloneBuildSubtarget")
+                    .AppendQuoted(StandaloneSubtarget.Value.ToString());
 
             if (BuildWindowsPlayer != null)
                 builder
